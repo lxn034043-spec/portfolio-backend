@@ -2,7 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const createError = require("http-errors");
-require("dotenv").config();
+
+require("dotenv").config({ path: "./config/.env" });
+
+const connectToMongoDB = require("./config/db");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,6 +36,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Connect to MongoDB before starting the server
+connectToMongoDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("MongoDB connection failed:", error.message);
+  });
