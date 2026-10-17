@@ -16,6 +16,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 const serviceRoutes = require("./routes/serviceRoutes");
 app.use("/api/services", serviceRoutes);
+const projectRoutes = require("./routes/projectRoutes");
+app.use("/api/projects", projectRoutes);
+const referenceRoutes = require("./routes/referenceRoutes");
+app.use("/api/references", referenceRoutes);
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 // Test endpoint
 app.get("/", (req, res) => {
   res.json({
