@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-
+const serviceRoutes = require("./routes/serviceRoutes");
+app.use("/api/services", serviceRoutes);
 // Test endpoint
 app.get("/", (req, res) => {
   res.json({
